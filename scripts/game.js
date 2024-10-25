@@ -21,3 +21,26 @@ function generate(words){
 // this is the real answere
 target= generate(words)
 console.log(target)
+
+// listens to what the user type
+document.addEventListener('keydown', function(event){
+    let valid='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (valid.includes(event.key)){
+        // add it to the answere
+    }
+    else{
+        //view part of the body
+    }
+})
+
+// selects all letters
+let letter = document.querySelectorAll('.letter');
+
+// listens to what the user presses on the screen
+letter.forEach(letter=>{
+    letter.addEventListener('click',function(event){
+        clickedDiv = event.target.innerHTML;
+        console.log(clickedDiv)
+});
+
+})
