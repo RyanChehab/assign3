@@ -47,77 +47,6 @@ function createDiv(target){
 
 createDiv(target)
 
-// listens to what the user type
-// document.addEventListener('keydown', function(event){
-//     let valid='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-//     if (valid.includes(event.key)){
-//         // add it to the answ
-//         let input= event.key;
-//     }
-//     else{
-//         //view part of the body
-
-//         // showBody(dictionary,wrongGuesses,order)
-//     }
-// })
-
-let letters = document.querySelectorAll('.letter');
-
-// Listens to what the user clicks on the screen
-letters.forEach(letter => {
-    letter.addEventListener('click', function(event) {
-        if (event.target.classList.contains('disabled')) {
-            return; 
-        }
-        let clickedDiv = event.target.innerHTML; 
-        
-        event.target.style.backgroundColor= '#414141';
-        event.target.classList.add('disabled')
-
-        
-
-        if (target.includes(clickedDiv)) {
-            
-            // returning the index
-        let indexArray = indices(clickedDiv);
-        
-        displayChar(indexArray, clickedDiv);
-
-        if (indexArray.length === target.length) {
-            let answer_div = document.getElementById('answer-section');
-            
-            let winningDiv = answer_div.createElement('div'); 
-            winningDiv.innerHTML='YOU WON!'
-            answer_div.appendChild(winningDiv);
-        }
-        } else {
-            
-            showBody(dictionary)
-        }
-    })
-})
-
-let wrongGuesses = 0;
-var order = ["head", "body", "left-hand", "right-hand", "left-leg", "right-leg"]
-function showBody(dictionary){
-    if(wrongGuesses < order.length){
-
-        let imgsDiv = document.getElementById('hang');
-        let imgs = document.createElement('img');
-        
-        imgs.src = dictionary[order[wrongGuesses]]
-        imgs.classList.add(order[wrongGuesses])
-
-        imgsDiv.appendChild(imgs)
-        wrongGuesses++;
-    }
-    if(wrongGuesses === order.length){
-        let answer_div = document.getElementById('answer-section');
-        answer_div.innerHTML=`GAME OVER! The word was ${target}`
-        
-    }
-}
-
 // finds the right letter index
 function indices(clickedDiv){
     let answer_div = document.getElementById('answer-section');
@@ -143,4 +72,74 @@ function displayChar(indexArray, clickedDiv) {
         }
     });
 }
+
+// Showing each body part
+let wrongGuesses = 0;
+var order = ["head", "body", "left-hand", "right-hand", "left-leg", "right-leg"]
+function showBody(dictionary){
+    if(wrongGuesses < order.length){
+
+        let imgsDiv = document.getElementById('hang');
+        let imgs = document.createElement('img');
+        
+        imgs.src = dictionary[order[wrongGuesses]]
+        imgs.classList.add(order[wrongGuesses])
+
+        imgsDiv.appendChild(imgs)
+        wrongGuesses++;
+    }
+    if(wrongGuesses === order.length){
+        let answer_div = document.getElementById('answer-section');
+        answer_div.innerHTML=`GAME OVER! The word was ${target}`
+        
+    }
+}
+
+// listens to what the user type
+document.addEventListener('keydown', function(event){
+    let valid='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (valid.includes(event.key)){
+        // add it to the answ
+        let input= event.key.toUpperCase();
+        console.log(input)
+    }
+    else{
+    }
+})
+
+let letters = document.querySelectorAll('.letter');
+
+// Listens to what the user clicks on the screen
+letters.forEach(letter => {
+    letter.addEventListener('click', function(event) {
+        if (event.target.classList.contains('disabled')) {
+            return; 
+        }
+        let clickedDiv = event.target.innerHTML; 
+        
+        event.target.style.backgroundColor= '#414141';
+        event.target.classList.add('disabled')
+
+        if (target.includes(clickedDiv)) {
+        // returning the index
+        let indexArray = indices(clickedDiv);
+        
+        displayChar(indexArray, clickedDiv);
+        
+        // when the user wins
+        if (indexArray.length === target.length) {
+            let answer_div = document.getElementById('answer-section');
+            
+            let winningDiv = answer_div.createElement('div'); 
+            winningDiv.innerHTML='YOU WON!'
+            answer_div.appendChild(winningDiv);
+        }
+        } 
+        else {
+            // wrong guess 
+            showBody(dictionary)
+        }
+    })
+})
+
 });
