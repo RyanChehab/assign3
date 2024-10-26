@@ -17,11 +17,11 @@ var words = [
 
 var dictionary = {
     "head": "assets/head.svg",
-    "body": "body.svg",
-    "left-hand":"left_hand.svg",
-    "right-hand":"right-hand.svg",
-    "left-leg":"left-leg.svg",
-    "right-leg":"right-leg.svg"
+    "body": "assets/body.svg",
+    "left-hand":"assets/left-hand.svg",
+    "right-hand":"assets/right-hand.svg",
+    "left-leg":"assets/left-leg.svg",
+    "right-leg":"assets/right-leg.svg"
 }
 
 // picking random word
@@ -37,7 +37,7 @@ function createDiv(target){
     let dashes = target.length;
     let answer_div = document.getElementById('answer-section');
     for (let i = 0; i<dashes;i++){
-        console.log(i)
+        
         let newdiv = document.createElement('div')
         newdiv.id = `newdiv${i}`
         newdiv.innerHTML = `<p style="margin:0px 8px"> _ </p>`
@@ -66,20 +66,40 @@ let letters = document.querySelectorAll('.letter');
 // Listens to what the user clicks on the screen
 letters.forEach(letter => {
     letter.addEventListener('click', function(event) {
-        const clickedDiv = event.target.innerHTML; 
-       
+        if (event.target.classList.contains('disabled')) {
+            return; 
+        }
+        let clickedDiv = event.target.innerHTML; 
+        
+        event.target.style.backgroundColor= '#414141';
+        event.target.classList.add('disabled')
+
+        
+
         if (target.includes(clickedDiv)) {
-            console.log(`${clickedDiv} is in the target word.`);
+            
+            // returning the index
+        let indexArray = indices(clickedDiv);
+        
+        displayChar(indexArray, clickedDiv);
+
+        if (indexArray.length === target.length) {
+            let answer_div = document.getElementById('answer-section');
+            
+            let winningDiv = answer_div.createElement('div'); 
+            winningDiv.innerHTML='YOU WON!'
+            answer_div.appendChild(winningDiv);
+        }
         } else {
-            console.log(`${clickedDiv} is NOT in the target word.`);
-            showBody(dictionary,wrongGuesses,order)
+            
+            showBody(dictionary)
         }
     })
 })
 
 let wrongGuesses = 0;
 var order = ["head", "body", "left-hand", "right-hand", "left-leg", "right-leg"]
-function showBody(dictionary,wrongGuesses,order){
+function showBody(dictionary){
     if(wrongGuesses < order.length){
 
         let imgsDiv = document.getElementById('hang');
@@ -91,12 +111,36 @@ function showBody(dictionary,wrongGuesses,order){
         imgsDiv.appendChild(imgs)
         wrongGuesses++;
     }
-    else{
-        console.log("gameOver")
+    if(wrongGuesses === order.length){
+        let answer_div = document.getElementById('answer-section');
+        answer_div.innerHTML=`GAME OVER! The word was ${target}`
+        
     }
-    
-        // imgs.sr
 }
 
+// finds the right letter index
+function indices(clickedDiv){
+    let answer_div = document.getElementById('answer-section');
+    // console.log(target)
+    let indices = [];
 
+    for (let i = 0; i < target.length;i++){
+        if (target[i]===clickedDiv){
+            indices.push(i);
+        }
+    }
+    return indices;
+}
+
+// fills the answering divs
+function displayChar(indexArray, clickedDiv) {
+    indexArray.forEach(index => {
+        let answerDiv = document.getElementById(`newdiv${index}`); 
+        // accesss div through its id predetermined
+        if (answerDiv) {
+            // adds the letter 
+            answerDiv.innerHTML = `<p style="margin:0px 8px">${clickedDiv}</p>`; 
+        }
+    });
+}
 });
