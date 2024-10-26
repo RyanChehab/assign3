@@ -21,40 +21,13 @@ var dictionary = {
     "right-leg":"right-leg.svg"
 }
 
-// calling functions
-
-
 // picking random word
 function generate(words){
     var random = Math.floor(Math.random() * words.length);
     return words[random];
 }
-
 // this is the real answere
 target= generate(words)
-console.log(target)
-
-// listens to what the user type
-document.addEventListener('keydown', function(event){
-    let valid='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    if (valid.includes(event.key)){
-        // add it to the answere
-    }
-    else{
-        //view part of the body
-    }
-})
-
-// selects all letters
-let letter = document.querySelectorAll('.letter');
-
-// listens to what the user presses on the screen
-letter.forEach(letter=>{
-    letter.addEventListener('click',function(event){
-        clickedDiv = event.target.innerHTML;
-        console.log(clickedDiv)
-});
-})
 
 // answer div
 function createDiv(target){
@@ -71,6 +44,51 @@ function createDiv(target){
 
 createDiv(target)
 
-function showBody(){
+// listens to what the user type
+document.addEventListener('keydown', function(event,body_index){
+    let valid='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (valid.includes(event.key)){
+        // add it to the answ
+        let input= event.key;
+    }
+    else{
+        //view part of the body
+
+        // showBody(dictionary,wrongGuesses,order)
+    }
+})
+
+// selects all letters
+let letter = document.querySelectorAll('.letter');
+
+// listens to what the user presses on the screen
+letter.forEach(letter=>{
+    letter.addEventListener('click',function(event){
+        clickedDiv = event.target.innerHTML;
+        console.log(clickedDiv)
+        // if
+});
+})
+
+let wrongGuesses = 0;
+var order = ["head", "body", "left-hand", "right-hand", "left-leg", "right-leg"]
+function showBody(dictionary,wrongGuesses,order){
+    if(wrongGuesses < order.length){
+        let imgsDiv = document.getElementById('hang');
+        let imgs = createElement('img');
+        bodyPart = order[wrongGuesses]
+        imgs.src = dictionary[bodyPart]
+        imgs.classList.add('bodypart')
+
+        wrongGuesses++;
+    }
     
+        // imgs.sr
 }
+
+function centralJudge(target,input) {
+    console.log(target);
+    console.log(input)
+    // if
+}
+centralJudge(target)
