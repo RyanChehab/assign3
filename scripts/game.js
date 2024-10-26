@@ -12,6 +12,18 @@ var words = [
     "toucan", "vanilla", "wolverine", "xerus", "yak", "zest", "avocado", "beetle", "cinnamon", "daffodil"
 ];
 
+var dictionary = {
+    "head": "head.svg",
+    "body": "body.svg",
+    "left-hand":"left_hand.svg",
+    "right-hand":"right-hand.svg",
+    "left-leg":"left-leg.svg",
+    "right-leg":"right-leg.svg"
+}
+
+// calling functions
+
+
 // picking random word
 function generate(words){
     var random = Math.floor(Math.random() * words.length);
@@ -42,5 +54,23 @@ letter.forEach(letter=>{
         clickedDiv = event.target.innerHTML;
         console.log(clickedDiv)
 });
-
 })
+
+// answer div
+function createDiv(target){
+    let dashes = target.length;
+    let answer_div = document.getElementById('answer-section');
+    for (let i = 0; i<dashes;i++){
+        console.log(i)
+        let newdiv = document.createElement('div')
+        newdiv.id = `newdiv${i}`
+        newdiv.innerHTML = `<p style="margin:0px 8px"> _ </p>`
+        answer_div.appendChild(newdiv)
+    }
+}
+
+createDiv(target)
+
+function showBody(){
+    
+}
